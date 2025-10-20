@@ -40,7 +40,8 @@ const sonrakiButonu = document.getElementById('sonrakiButonu');
 
 // 3. Fonksiyon: Kartın içini yeni elementle doldur
 function kartiGuncelle() {
-    const element = elementler[mevcuElementIndex];
+    // *** HATA BURADAYDI, DÜZELTTİM: ***
+    const element = elementler[mevcutElementIndex]; // 'mevcu' değil 'mevcut'
     
     atomNoYuzu.textContent = element.atomNo;
     sembolYuzu.textContent = element.sembol;

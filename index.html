@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Element Eşleştirme Oyunu</title>
+    <title>Element Ezberle</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <h1>Element Eşleştirme</h1>
-    <p>Sembolü, doğru isimle eşleştirin.</p>
-
-    <div id="geriBildirimAlani"></div>
-
-    <div class="oyun-alani">
-        <div class="liste-konteyner" id="sembolListesi">
+    <h1>Kimya Element Kartları</h1>
+    <p>Kartın üzerine tıklayarak elementin adını öğren.</p>
+    <div class="kart-konteyner">
+        <div class="kart" id="elementKarti">
+            <div class="kart-on-yuz">
+                <span id="atomNumarasi" class="atom-no"></span>
+                <span id="elementSembolu" class="sembol"></span>
             </div>
-        
-        <div class="liste-konteyner" id="isimListesi">
+            <div class="kart-arka-yuz">
+                <span id="elementAdi"></span>
             </div>
+        </div>
     </div>
-
-    <button id="yeniOyunButonu">Yeni Tur</button>
-
+    <button id="sonrakiButonu">Sonraki Element</button>
     <script src="script.js"></script> 
 </body>
 </html>
+

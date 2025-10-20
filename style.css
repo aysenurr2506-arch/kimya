@@ -62,7 +62,7 @@ h1 {
     position: relative; /* Atom Numarasını konumlandırmak için */
 }
 
-/* Atom Numarası (Sol üst köşe) */
+/* Atom Numarası (Sağ üst köşe) */
 .atom-no {
     position: absolute;
     top: 15px;
@@ -102,3 +102,4 @@ h1 {
 #sonrakiButonu:hover {
     background-color: #27ae60;
 }
+

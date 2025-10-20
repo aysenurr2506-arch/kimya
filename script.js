@@ -29,7 +29,8 @@ const elementler = [
     { atomNo: 82, sembol: 'Pb', ad: 'Kurşun' }
 ];
 
-let mevcutElementIndex = -1;
+// O an gösterilen elementin index'ini saklamak için
+let mevcutElementIndex = -1; // Başlangıçta -1 yapıyoruz ki ilk seçilen hep farklı olsun
 
 // 2. HTML Elemanlarını Seçme
 const kart = document.getElementById('elementKarti');
@@ -40,30 +41,43 @@ const sonrakiButonu = document.getElementById('sonrakiButonu');
 
 // 3. Fonksiyon: Kartın içini yeni elementle doldur
 function kartiGuncelle() {
-    // *** HATA BURADAYDI, DÜZELTTİM: ***
-    const element = elementler[mevcutElementIndex]; // 'mevcu' değil 'mevcut'
+    // Düzeltilen yer burası:
+    const element = elementler[mevcutElementIndex];
     
+    // HTML içindeki yazıları güncelle
     atomNoYuzu.textContent = element.atomNo;
     sembolYuzu.textContent = element.sembol;
     adYuzu.textContent = element.ad;
     
+    // Kartı tekrar ön yüzüne çevir (eğer dönmüşse)
     kart.classList.remove('dondu');
 }
 
 // 4. Fonksiyon: Rastgele yeni bir element seç ve göster
 function sonrakiElementiGoster() {
+    // Rastgele yeni bir index oluştur
     let yeniIndex = Math.floor(Math.random() * elementler.length);
+
+    // Yeni seçilen, bir öncekİyle aynıysa, farklı bir tane bulana kadar tekrar seç
     while (yeniIndex === mevcutElementIndex) {
         yeniIndex = Math.floor(Math.random() * elementler.length);
     }
+    
+    // Yeni index'i mevcut olarak ayarla
     mevcutElementIndex = yeniIndex;
+    
+    // Kartı bu yeni element bilgisiyle güncelle
     kartiGuncelle();
 }
 
-// 5. Olay Dinleyicileri
+// 5. Olay Dinleyicileri (Kullanıcı etkileşimleri)
+
+// Karta tıklandığında 'dondu' sınıfını ekle/kaldır (CSS animasyonu tetikler)
 kart.addEventListener('click', () => {
     kart.classList.toggle('dondu');
 });
+
+// Butona tıklandığında sonraki elementi göster
 sonrakiButonu.addEventListener('click', sonrakiElementiGoster);
 
 // 6. Başlangıç: Sayfa ilk yüklendiğinde hemen rastgele bir element göster

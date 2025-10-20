@@ -1,96 +1,121 @@
-// 1. VERİ: Lise Müfredatı Element Listesi
-const elementler = [
-    // İlk 20 Element
-    { atomNo: 1, sembol: 'H', ad: 'Hidrojen' },
-    { atomNo: 2, sembol: 'He', ad: 'Helyum' },
-    { atomNo: 3, sembol: 'Li', ad: 'Lityum' },
-    { atomNo: 4, sembol: 'Be', ad: 'Berilyum' },
-    { atomNo: 5, sembol: 'B', ad: 'Bor' },
-    { atomNo: 6, sembol: 'C', ad: 'Karbon' },
-    { atomNo: 7, sembol: 'N', ad: 'Azot' },
-    { atomNo: 8, sembol: 'O', ad: 'Oksijen' },
-    { atomNo: 9, sembol: 'F', ad: 'Flor' },
-    { atomNo: 10, sembol: 'Ne', ad: 'Neon' },
-    { atomNo: 11, sembol: 'Na', ad: 'Sodyum' },
-    { atomNo: 12, sembol: 'Mg', ad: 'Magnezyum' },
-    { atomNo: 13, sembol: 'Al', ad: 'Alüminyum' },
-    { atomNo: 14, sembol: 'Si', ad: 'Silisyum' },
-    { atomNo: 15, sembol: 'P', ad: 'Fosfor' },
-    { atomNo: 16, sembol: 'S', ad: 'Kükürt' },
-    { atomNo: 17, sembol: 'Cl', ad: 'Klor' },
-    { atomNo: 18, sembol: 'Ar', ad: 'Argon' },
-    { atomNo: 19, sembol: 'K', ad: 'Potasyum' },
-    { atomNo: 20, sembol: 'Ca', ad: 'Kalsiyum' },
-
-    // Yaygın Kullanılan Diğer Elementler
-    { atomNo: 24, sembol: 'Cr', ad: 'Krom' },
-    { atomNo: 25, sembol: 'Mn', ad: 'Mangan' },
-    { atomNo: 26, sembol: 'Fe', ad: 'Demir' },
-    { atomNo: 27, sembol: 'Co', ad: 'Kobalt' },
-    { atomNo: 28, sembol: 'Ni', ad: 'Nikel' },
-    { atomNo: 29, sembol: 'Cu', ad: 'Bakır' },
-    { atomNo: 30, sembol: 'Zn', ad: 'Çinko' },
-    { atomNo: 35, sembol: 'Br', ad: 'Brom' },
-    { atomNo: 47, sembol: 'Ag', ad: 'Gümüş' },
-    { atomNo: 50, sembol: 'Sn', ad: 'Kalay' },
-    { atomNo: 53, sembol: 'I', ad: 'İyot' },
-    { atomNo: 56, sembol: 'Ba', ad: 'Baryum' },
-    { atomNo: 78, sembol: 'Pt', ad: 'Platin' },
-    { atomNo: 79, sembol: 'Au', ad: 'Altın' },
-    { atomNo: 80, sembol: 'Hg', ad: 'Cıva' },
-    { atomNo: 82, sembol: 'Pb', ad: 'Kurşun' }
-];
-
-// O an gösterilen elementin index'ini saklamak için
-let mevcutElementIndex = -1; // Başlangıçta -1 yapıyoruz ki ilk seçilen hep farklı olsun
-
-// 2. HTML Elemanlarını Seçme
-const kart = document.getElementById('elementKarti');
-const atomNoYuzu = document.getElementById('atomNumarasi');
-const sembolYuzu = document.getElementById('elementSembolu');
-const adYuzu = document.getElementById('elementAdi');
-const sonrakiButonu = document.getElementById('sonrakiButonu');
-
-// 3. Fonksiyon: Kartın içini yeni elementle doldur
-function kartiGuncelle() {
-    // Veri dizisinden o anki elementi al
-    const element = elementler[mevcutElementIndex];
-    
-    // HTML içindeki yazıları güncelle
-    atomNoYuzu.textContent = element.atomNo;
-    sembolYuzu.textContent = element.sembol;
-    adYuzu.textContent = element.ad;
-    
-    // Kartı tekrar ön yüzüne çevir (eğer dönmüşse)
-    kart.classList.remove('dondu');
+/* Genel Sayfa Ayarları */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f7f6;
+    color: #333;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-// 4. Fonksiyon: Rastgele yeni bir element seç ve göster
-function sonrakiElementiGoster() {
-    // Rastgele yeni bir index oluştur
-    let yeniIndex = Math.floor(Math.random() * elementler.length);
-
-    // Yeni seçilen, bir öncekİyle aynıysa, farklı bir tane bulana kadar tekrar seç
-    while (yeniIndex === mevcutElementIndex) {
-        yeniIndex = Math.floor(Math.random() * elementler.length);
-    }
-    
-    // Yeni index'i mevcut olarak ayarla
-    mevcutElementIndex = yeniIndex;
-    
-    // Kartı bu yeni element bilgisiyle güncelle
-    kartiGuncelle();
+h1 {
+    color: #2c3e50;
+    margin-bottom: 5px;
 }
 
-// 5. Olay Dinleyicileri (Kullanıcı etkileşimleri)
+p {
+    margin-top: 0;
+}
 
-// Karta tıklandığında 'dondu' sınıfını ekle/kaldır (CSS animasyonu tetikler)
-kart.addEventListener('click', () => {
-    kart.classList.toggle('dondu');
-});
+/* Oyun alanı (iki listeyi yan yana koyar) */
+.oyun-alani {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Listeler arası boşluk */
+    width: 100%;
+    max-width: 600px;
+    margin: 20px 0;
+}
 
-// Butona tıklandığında sonraki elementi göster
-sonrakiButonu.addEventListener('click', sonrakiElementiGoster);
+.liste-konteyner {
+    flex: 1; /* İki liste de eşit genişlikte olsun */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Kartlar arası boşluk */
+}
 
-// 6. Başlangıç: Sayfa ilk yüklendiğinde hemen rastgele bir element göster
-sonrakiElementiGoster();
+/* Tıklanabilir kart stili */
+.kart {
+    padding: 20px;
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none; /* Metin seçmeyi engeller */
+}
+
+.kart:hover {
+    border-color: #3498db;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* ----- JavaScript ile eklenecek durum sınıfları ----- */
+
+/* Kullanıcı tıkladığında */
+.kart.secili {
+    background-color: #eaf5fc;
+    border-color: #3498db;
+    transform: scale(1.03);
+}
+
+/* Eşleşme doğruysa */
+.kart.eslesti {
+    background-color: #d4efdf;
+    border-color: #2ecc71;
+    color: #2ecc71;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Eşleşme yanlışsa (kısa süreliğine) */
+.kart.hatali {
+    background-color: #f9ebea;
+    border-color: #e74c3c;
+    animation: salla 0.5s ease;
+}
+
+/* Geri bildirim alanı (Doğru/Yanlış) */
+#geriBildirimAlani {
+    height: 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+#geriBildirimAlani.dogru {
+    color: #2ecc71;
+}
+#geriBildirimAlani.yanlis {
+    color: #e74c3c;
+}
+
+/* Yeni Oyun Butonu */
+#yeniOyunButonu {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 8px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+#yeniOyunButonu:hover {
+    background-color: #2980b9;
+}
+
+/* Sallanma animasyonu (hatalı eşleşme için) */
+@keyframes salla {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}

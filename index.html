@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Element Ezberle</title>
+    <title>Element Eşleştirme Oyunu</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <h1>Kimya Element Kartları</h1>
-    <p>Kartın üzerine tıklayarak elementin adını öğren.</p>
+    <h1>Element Eşleştirme</h1>
+    <p>Sembolü, doğru isimle eşleştirin.</p>
 
-    <div class="kart-konteyner">
-        <div class="kart" id="elementKarti">
+    <div id="geriBildirimAlani"></div>
 
-            <div class="kart-on-yuz">
-                <span id="atomNumarasi" class="atom-no"></span>
-                <span id="elementSembolu" class="sembol"></span>
+    <div class="oyun-alani">
+        <div class="liste-konteyner" id="sembolListesi">
             </div>
-
-            <div class="kart-arka-yuz">
-                <span id="elementAdi"></span>
+        
+        <div class="liste-konteyner" id="isimListesi">
             </div>
-
-        </div>
     </div>
 
-    <button id="sonrakiButonu">Sonraki Element</button>
+    <button id="yeniOyunButonu">Yeni Tur</button>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script> 
 </body>
-
 </html>

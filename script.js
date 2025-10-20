@@ -1,5 +1,6 @@
 // 1. VERİ: Lise Müfredatı Element Listesi
 const elementler = [
+    // İlk 20 Element
     { atomNo: 1, sembol: 'H', ad: 'Hidrojen' },
     { atomNo: 2, sembol: 'He', ad: 'Helyum' },
     { atomNo: 3, sembol: 'Li', ad: 'Lityum' },
@@ -20,10 +21,21 @@ const elementler = [
     { atomNo: 18, sembol: 'Ar', ad: 'Argon' },
     { atomNo: 19, sembol: 'K', ad: 'Potasyum' },
     { atomNo: 20, sembol: 'Ca', ad: 'Kalsiyum' },
+
+    // Yaygın Kullanılan Diğer Elementler
+    { atomNo: 24, sembol: 'Cr', ad: 'Krom' },
+    { atomNo: 25, sembol: 'Mn', ad: 'Mangan' },
     { atomNo: 26, sembol: 'Fe', ad: 'Demir' },
+    { atomNo: 27, sembol: 'Co', ad: 'Kobalt' },
+    { atomNo: 28, sembol: 'Ni', ad: 'Nikel' },
     { atomNo: 29, sembol: 'Cu', ad: 'Bakır' },
     { atomNo: 30, sembol: 'Zn', ad: 'Çinko' },
+    { atomNo: 35, sembol: 'Br', ad: 'Brom' },
     { atomNo: 47, sembol: 'Ag', ad: 'Gümüş' },
+    { atomNo: 50, sembol: 'Sn', ad: 'Kalay' },
+    { atomNo: 53, sembol: 'I', ad: 'İyot' },
+    { atomNo: 56, sembol: 'Ba', ad: 'Baryum' },
+    { atomNo: 78, sembol: 'Pt', ad: 'Platin' },
     { atomNo: 79, sembol: 'Au', ad: 'Altın' },
     { atomNo: 80, sembol: 'Hg', ad: 'Cıva' },
     { atomNo: 82, sembol: 'Pb', ad: 'Kurşun' }
@@ -41,7 +53,7 @@ const sonrakiButonu = document.getElementById('sonrakiButonu');
 
 // 3. Fonksiyon: Kartın içini yeni elementle doldur
 function kartiGuncelle() {
-    // Düzeltilen yer burası:
+    // Veri dizisinden o anki elementi al
     const element = elementler[mevcutElementIndex];
     
     // HTML içindeki yazıları güncelle
@@ -82,3 +94,4 @@ sonrakiButonu.addEventListener('click', sonrakiElementiGoster);
 
 // 6. Başlangıç: Sayfa ilk yüklendiğinde hemen rastgele bir element göster
 sonrakiElementiGoster();
+

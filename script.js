@@ -1,76 +1,63 @@
-const taskInput = document.getElementById("taskInput");
-const addTaskBtn = document.getElementById("addTaskBtn");
-const taskList = document.getElementById("taskList");
-const dateDisplay = document.getElementById("dateDisplay");
+const input = document.getElementById('taskInput');
+const btn = document.getElementById('addTaskBtn');
+const list = document.getElementById('taskList');
+const remainingEl = document.getElementById('remainingCount');
+const doneEl = document.getElementById('doneCount');
 
-// Tarihi göster
-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-dateDisplay.innerText = new Date().toLocaleDateString('tr-TR', options);
+// LocalStorage anahtarı
+const STORAGE_KEY = 'my_nitelikli_app_tasks';
 
-// Başlangıçta görevleri yükle
-document.addEventListener("DOMContentLoaded", renderTasks);
+let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+function updateApp() {
+    list.innerHTML = '';
+    let doneCount = 0;
+
+    tasks.forEach((task, index) => {
+        if(task.done) doneCount++;
+        
+        const div = document.createElement('div');
+        div.className = `todo-item ${task.done ? 'completed' : ''}`;
+        div.innerHTML = `
+            <div class="checkbox" onclick="toggleTask(${index})"></div>
+            <span onclick="toggleTask(${index})">${task.text}</span>
+            <div class="delete-btn" onclick="deleteTask(${index})">Sil</div>
+        `;
+        list.appendChild(div);
+    });
+
+    // İstatistikleri güncelle
+    remainingEl.innerText = tasks.length - doneCount;
+    doneEl.innerText = doneCount;
+    
+    // Veriyi kaydet
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+}
 
 function addTask() {
-    const text = taskInput.value.trim();
-    if (!text) return;
-
-    const newTask = {
-        id: Date.now(),
-        text: text,
-        completed: false
-    };
-
-    const tasks = getTasks();
-    tasks.push(newTask);
-    saveTasks(tasks);
+    const text = input.value.trim();
+    if(!text) return;
     
-    taskInput.value = "";
-    renderTasks();
+    tasks.push({ text: text, done: false });
+    input.value = '';
+    updateApp();
 }
 
-function renderTasks() {
-    const tasks = getTasks();
-    taskList.innerHTML = "";
+window.toggleTask = (index) => {
+    tasks[index].done = !tasks[index].done;
+    updateApp();
+};
 
-    tasks.forEach(task => {
-        const li = document.createElement("li");
-        if (task.completed) li.classList.add("completed");
+window.deleteTask = (index) => {
+    tasks.splice(index, 1);
+    updateApp();
+};
 
-        li.innerHTML = `
-            <span onclick="toggleTask(${task.id})">${task.text}</span>
-            <button class="delete-btn" onclick="deleteTask(${task.id})">Sil</button>
-        `;
-        taskList.appendChild(li);
-    });
-}
-
-function toggleTask(id) {
-    const tasks = getTasks();
-    const task = tasks.find(t => t.id === id);
-    task.completed = !task.completed;
-    saveTasks(tasks);
-    renderTasks();
-}
-
-function deleteTask(id) {
-    let tasks = getTasks();
-    tasks = tasks.filter(t => t.id !== id);
-    saveTasks(tasks);
-    renderTasks();
-}
-
-// LocalStorage Yardımcıları
-function getTasks() {
-    return JSON.parse(localStorage.getItem("myTasks")) || [];
-}
-
-function saveTasks(tasks) {
-    localStorage.setItem("myTasks", JSON.stringify(tasks));
-}
-
-// Enter tuşu desteği
-taskInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") addTask();
+// Dinleyiciler
+btn.addEventListener('click', addTask);
+input.addEventListener('keypress', (e) => {
+    if(e.key === 'Enter') addTask();
 });
 
-addTaskBtn.addEventListener("click", addTask);
+// İlk yükleme
+updateApp();

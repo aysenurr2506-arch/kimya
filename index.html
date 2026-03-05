@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Todo List</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=主張" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Geleceğin Uygulaması</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container">
+<div class="app-container">
     <header>
-      <h1>Yapılacaklar <span>Listesi</span></h1>
-      <p id="dateDisplay"></p>
+        <h1>Merhaba! 👋</h1>
+        <p>Bugün neleri hallediyoruz?</p>
+        <div class="stats">
+            <div class="stat-card">Kalan: <b id="remainingCount">0</b></div>
+            <div class="stat-card">Biten: <b id="doneCount">0</b></div>
+        </div>
     </header>
 
-    <div class="input-group">
-      <input type="text" id="taskInput" placeholder="Bugün ne yapacaksın?" maxlength="50">
-      <button id="addTaskBtn">Ekle</button>
+    <div class="content" id="taskList">
+        </div>
+
+    <div class="bottom-bar">
+        <input type="text" id="taskInput" placeholder="Bir görev yazın...">
+        <button class="add-btn" id="addTaskBtn">+</button>
     </div>
+</div>
 
-    <ul id="taskList">
-      </ul>
-  </div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

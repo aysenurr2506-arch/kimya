@@ -3,17 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yapılacaklar Listesi</title>
+  <title>Modern Todo List</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=主張" rel="stylesheet">
 </head>
 <body>
+
   <div class="container">
-    <h1>📝 Yapılacaklar Listesi</h1>
+    <header>
+      <h1>Yapılacaklar <span>Listesi</span></h1>
+      <p id="dateDisplay"></p>
+    </header>
+
     <div class="input-group">
-      <input type="text" id="taskInput" placeholder="Yeni görev ekle">
+      <input type="text" id="taskInput" placeholder="Bugün ne yapacaksın?" maxlength="50">
       <button id="addTaskBtn">Ekle</button>
     </div>
-    <ul id="taskList"></ul>
+
+    <ul id="taskList">
+      </ul>
   </div>
 
   <script src="script.js"></script>

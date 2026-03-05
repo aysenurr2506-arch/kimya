@@ -1,67 +1,76 @@
 const taskInput = document.getElementById("taskInput");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
+const dateDisplay = document.getElementById("dateDisplay");
 
-// Sayfa yüklendiğinde localStorage'dan görevleri yükle
-document.addEventListener("DOMContentLoaded", loadTasks);
+// Tarihi göster
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+dateDisplay.innerText = new Date().toLocaleDateString('tr-TR', options);
 
-// Görev ekleme
-addTaskBtn.addEventListener("click", addTask);
-taskInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") addTask();
-});
+// Başlangıçta görevleri yükle
+document.addEventListener("DOMContentLoaded", renderTasks);
 
 function addTask() {
-  const taskText = taskInput.value.trim();
-  if (!taskText) return;
+    const text = taskInput.value.trim();
+    if (!text) return;
 
-  const li = createTaskElement(taskText);
-  taskList.appendChild(li);
-  saveTask(taskText);
+    const newTask = {
+        id: Date.now(),
+        text: text,
+        completed: false
+    };
 
-  taskInput.value = "";
+    const tasks = getTasks();
+    tasks.push(newTask);
+    saveTasks(tasks);
+    
+    taskInput.value = "";
+    renderTasks();
 }
 
-function createTaskElement(taskText) {
-  const li = document.createElement("li");
-  li.textContent = taskText;
+function renderTasks() {
+    const tasks = getTasks();
+    taskList.innerHTML = "";
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "Sil";
-  deleteBtn.addEventListener("click", () => {
-    li.remove();
-    removeTask(taskText);
-  });
+    tasks.forEach(task => {
+        const li = document.createElement("li");
+        if (task.completed) li.classList.add("completed");
 
-  li.appendChild(deleteBtn);
-
-  // Görev tamamlandı tıklayınca
-  li.addEventListener("click", (e) => {
-    if (e.target.tagName !== "BUTTON") {
-      li.classList.toggle("completed");
-    }
-  });
-
-  return li;
+        li.innerHTML = `
+            <span onclick="toggleTask(${task.id})">${task.text}</span>
+            <button class="delete-btn" onclick="deleteTask(${task.id})">Sil</button>
+        `;
+        taskList.appendChild(li);
+    });
 }
 
-// LocalStorage işlemleri
-function saveTask(task) {
-  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  tasks.push(task);
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+function toggleTask(id) {
+    const tasks = getTasks();
+    const task = tasks.find(t => t.id === id);
+    task.completed = !task.completed;
+    saveTasks(tasks);
+    renderTasks();
 }
 
-function removeTask(task) {
-  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  tasks = tasks.filter(t => t !== task);
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+function deleteTask(id) {
+    let tasks = getTasks();
+    tasks = tasks.filter(t => t.id !== id);
+    saveTasks(tasks);
+    renderTasks();
 }
 
-function loadTasks() {
-  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  tasks.forEach(task => {
-    const li = createTaskElement(task);
-    taskList.appendChild(li);
-  });
+// LocalStorage Yardımcıları
+function getTasks() {
+    return JSON.parse(localStorage.getItem("myTasks")) || [];
 }
+
+function saveTasks(tasks) {
+    localStorage.setItem("myTasks", JSON.stringify(tasks));
+}
+
+// Enter tuşu desteği
+taskInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") addTask();
+});
+
+addTaskBtn.addEventListener("click", addTask);
